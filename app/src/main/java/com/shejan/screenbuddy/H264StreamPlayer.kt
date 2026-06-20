@@ -28,6 +28,7 @@ class H264StreamPlayer(
         fun onConnected()
         fun onDisconnected()
         fun onError(e: Exception)
+        fun onVideoSizeChanged(width: Int, height: Int)
     }
 
     private var workerThread: Thread? = null
@@ -208,8 +209,19 @@ class H264StreamPlayer(
 
                     // Drain output buffers and render to Surface
                     var outputBufferIndex = decoder.dequeueOutputBuffer(bufferInfo, 0)
-                    while (outputBufferIndex >= 0) {
-                        decoder.releaseOutputBuffer(outputBufferIndex, true)
+                    while (outputBufferIndex >= 0 || outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                        if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                            try {
+                                val newFormat = decoder.outputFormat
+                                val width = newFormat.getInteger(MediaFormat.KEY_WIDTH)
+                                val height = newFormat.getInteger(MediaFormat.KEY_HEIGHT)
+                                callback.onVideoSizeChanged(width, height)
+                            } catch (e: Exception) {
+                                Log.e(TAG, "Error parsing video size: ${e.message}")
+                            }
+                        } else if (outputBufferIndex >= 0) {
+                            decoder.releaseOutputBuffer(outputBufferIndex, true)
+                        }
                         outputBufferIndex = decoder.dequeueOutputBuffer(bufferInfo, 0)
                     }
                 }

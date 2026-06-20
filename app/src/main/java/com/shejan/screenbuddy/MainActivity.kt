@@ -44,6 +44,8 @@ class MainActivity : ComponentActivity() {
     private var isConnected = mutableStateOf(false)
     private var isConnecting = mutableStateOf(false)
     private var connectionError = mutableStateOf<String?>(null)
+    private var videoWidth = mutableStateOf(16)
+    private var videoHeight = mutableStateOf(9)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +76,8 @@ class MainActivity : ComponentActivity() {
 
     private fun startMirroring(host: String, port: Int, pin: String, surface: Surface) {
         player?.stop()
+        videoWidth.value = 16
+        videoHeight.value = 9
         player = H264StreamPlayer(host, port, pin, surface, object : H264StreamPlayer.Callback {
             override fun onConnected() {
                 runOnUiThread {
@@ -95,6 +99,13 @@ class MainActivity : ComponentActivity() {
                     isConnecting.value = false
                     isConnected.value = false
                     connectionError.value = e.message ?: "Connection error"
+                }
+            }
+
+            override fun onVideoSizeChanged(width: Int, height: Int) {
+                runOnUiThread {
+                    videoWidth.value = width
+                    videoHeight.value = height
                 }
             }
         })
@@ -341,6 +352,10 @@ class MainActivity : ComponentActivity() {
                 .background(Color.Black)
         ) {
             // Android native SurfaceView embedded in Compose
+            val w by videoWidth
+            val h by videoHeight
+            val ratio = w.toFloat() / h.toFloat()
+
             AndroidView(
                 factory = { context ->
                     val gd = android.view.GestureDetector(context, object : android.view.GestureDetector.SimpleOnGestureListener() {
@@ -383,7 +398,9 @@ class MainActivity : ComponentActivity() {
                         })
                     }
                 },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .aspectRatio(ratio)
+                    .align(Alignment.Center)
             )
 
             // Auto-hiding / double-tap-triggered control overlay
