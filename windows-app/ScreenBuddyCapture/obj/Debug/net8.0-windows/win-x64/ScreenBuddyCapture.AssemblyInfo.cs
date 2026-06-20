@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScreenBuddyCapture")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30fc96b2267a995cdc481361b27bd874c2ff873e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScreenBuddyCapture")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScreenBuddyCapture")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

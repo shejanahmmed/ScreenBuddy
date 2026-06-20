@@ -26,3 +26,4 @@ C:\Users\ShejanAhmmed\Documents\All My Projects\Apps\ScreenBuddy\windows-app\Scr
 C:\Users\ShejanAhmmed\Documents\All My Projects\Apps\ScreenBuddy\windows-app\ScreenBuddyCapture\bin\Debug\net8.0-windows\win-x64\System.Text.Encodings.Web.dll
 C:\Users\ShejanAhmmed\Documents\All My Projects\Apps\ScreenBuddy\windows-app\ScreenBuddyCapture\bin\Debug\net8.0-windows\win-x64\System.Text.Json.dll
 C:\Users\ShejanAhmmed\Documents\All My Projects\Apps\ScreenBuddy\windows-app\ScreenBuddyCapture\bin\Debug\net8.0-windows\win-x64\Vortice.MediaFoundation.dll
+C:\Users\ShejanAhmmed\Documents\All My Projects\Apps\ScreenBuddy\windows-app\ScreenBuddyCapture\obj\Debug\net8.0-windows\win-x64\ScreenBuddyCapture.sourcelink.json
