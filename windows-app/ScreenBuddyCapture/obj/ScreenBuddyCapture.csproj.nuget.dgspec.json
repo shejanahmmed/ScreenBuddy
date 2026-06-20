@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+        "projectName": "ScreenBuddyCapture",
+        "projectPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+        "packagesPath": "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ShejanAhmmed\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Vortice.DXGI": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "Vortice.Direct3D11": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "Vortice.MediaFoundation": {
+              "target": "Package",
+              "version": "[3.8.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
