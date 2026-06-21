@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {}
+    "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {
+    "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+        "projectUniqueName": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
         "projectName": "ScreenBuddyCapture",
-        "projectPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+        "projectPath": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
         "packagesPath": "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\obj\\",
+        "outputPath": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ShejanAhmmed\\AppData\\Roaming\\NuGet\\NuGet.Config"

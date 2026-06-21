@@ -687,14 +687,14 @@ class MainActivity : ComponentActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp),
+                    .statusBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Header Nav Icons
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .statusBarsPadding()
                         .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -787,7 +787,14 @@ class MainActivity : ComponentActivity() {
                                     pairingPin = it
                                 }
                             },
-                            placeholder = { Text("6-Digit PIN", color = Color.Gray) },
+                            placeholder = {
+                                Text(
+                                    text = "6-Digit PIN",
+                                    color = Color.Gray,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center
+                                )
+                            },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             textStyle = LocalTextStyle.current.copy(
@@ -825,7 +832,9 @@ class MainActivity : ComponentActivity() {
 
                     if (pairingPin.length < 6) {
                         Box(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -833,19 +842,23 @@ class MainActivity : ComponentActivity() {
                                 color = Color.White.copy(alpha = 0.4f),
                                 fontSize = 13.sp,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(24.dp)
+                                modifier = Modifier.padding(horizontal = 24.dp)
                             )
                         }
                     } else if (isDiscovering && discoveredPCs.isEmpty()) {
                         Box(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                             contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(color = Color(0xFF00ADB5))
                         }
                     } else if (discoveredPCs.isEmpty()) {
                         Box(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -853,7 +866,7 @@ class MainActivity : ComponentActivity() {
                                 color = Color.White.copy(alpha = 0.4f),
                                 fontSize = 13.sp,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(24.dp)
+                                modifier = Modifier.padding(horizontal = 24.dp)
                             )
                         }
                     } else {
@@ -1313,13 +1326,13 @@ class MainActivity : ComponentActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp)
+                    .statusBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp)
             ) {
                 // Header Nav
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .statusBarsPadding()
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -1431,13 +1444,13 @@ class MainActivity : ComponentActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp)
+                    .statusBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp)
             ) {
                 // Header Nav
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .statusBarsPadding()
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
