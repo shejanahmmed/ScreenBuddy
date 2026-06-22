@@ -29,6 +29,7 @@ public sealed class StreamServer : IDisposable
     private const int MSG_VIDEO_FRAME = 1;
     private const int MSG_INPUT_EVENT = 2;
     private const int MSG_HANDSHAKE   = 3;
+    private const int MSG_QUALITY_CHANGE = 4;
     private const int MSG_DISCONNECT  = 5;
 
     public string Pin { get; private set; }
@@ -238,21 +239,25 @@ public sealed class StreamServer : IDisposable
                 //    after successful client authentication.
                 // ─────────────────────────────────────────────────────────────
                 capture = new ScreenCapture(displayIndex: 0);
+                
+                var sessionState = new SessionState();
+
                 encoder = new H264Encoder(
                     width: capture.Width,
                     height: capture.Height,
                     fps: 30,
-                    bitrateBps: 2_000_000 // 2 Mbps
+                    bitrateBps: sessionState.BitrateBps
                 );
 
                 // 3. Spawn client touch reader task
                 var clientSocket = client;
-                inputReaderTask = Task.Run(() => ReadFromClientLoop(clientSocket, stream));
+                inputReaderTask = Task.Run(() => ReadFromClientLoop(clientSocket, stream, sessionState));
 
                 Console.WriteLine("[StreamServer] Streaming active screen mirror & receiving touch inputs...");
 
                 // Buffer for frame capture data
                 byte[]? bgraBuffer = null;
+                int currentBitrateBps = sessionState.BitrateBps;
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -263,7 +268,22 @@ public sealed class StreamServer : IDisposable
                         break;
                     }
 
-                    // A. Capture a new screen frame
+                    // A. Check if bitrate needs updating dynamically
+                    int targetBitrate = sessionState.BitrateBps;
+                    if (targetBitrate != currentBitrateBps)
+                    {
+                        Console.WriteLine($"[StreamServer] Updating encoder bitrate dynamically to: {targetBitrate / 1000} kbps");
+                        encoder?.Dispose();
+                        encoder = new H264Encoder(
+                            width: capture.Width,
+                            height: capture.Height,
+                            fps: 30,
+                            bitrateBps: targetBitrate
+                        );
+                        currentBitrateBps = targetBitrate;
+                    }
+
+                    // B. Capture a new screen frame
                     using var bitmap = capture.CaptureFrame(timeoutMs: 33);
                     if (bitmap == null)
                     {
@@ -344,7 +364,7 @@ public sealed class StreamServer : IDisposable
     /// <summary>
     /// Reads incoming control packets (e.g., touch/mouse coordinates) from the client asynchronously.
     /// </summary>
-    private static void ReadFromClientLoop(TcpClient client, NetworkStream stream)
+    private static void ReadFromClientLoop(TcpClient client, NetworkStream stream, SessionState sessionState)
     {
         var header = new byte[8];
         var payload = new byte[1024];
@@ -402,6 +422,16 @@ public sealed class StreamServer : IDisposable
 
                     // Forward to Win32 Simulation API
                     InputSimulator.SimulateTouchEvent(action, normX, normY);
+                }
+                else if (msgType == MSG_QUALITY_CHANGE && payloadLen >= 4)
+                {
+                    int bitrate = (payload[0] << 24) |
+                                  (payload[1] << 16) |
+                                  (payload[2] << 8)  |
+                                  payload[3];
+
+                    Console.WriteLine($"[StreamServer] Client requested quality/bitrate change: {bitrate / 1000} kbps");
+                    sessionState.BitrateBps = bitrate;
                 }
                 else if (msgType == MSG_DISCONNECT)
                 {
@@ -465,5 +495,10 @@ public sealed class StreamServer : IDisposable
         if (_disposed) return;
         _disposed = true;
         Stop();
+    }
+
+    private sealed class SessionState
+    {
+        public volatile int BitrateBps = 2_000_000;
     }
 }

@@ -18,6 +18,7 @@ public sealed class StreamClient
     // Protocol Message Types
     private const int MSG_VIDEO_FRAME = 1;
     private const int MSG_HANDSHAKE   = 3;
+    private const int MSG_QUALITY_CHANGE = 4;
     private const int MSG_DISCONNECT  = 5;
 
     public StreamClient(string host = "127.0.0.1", int port = 7890)

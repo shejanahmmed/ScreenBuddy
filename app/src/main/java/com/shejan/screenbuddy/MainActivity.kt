@@ -269,6 +269,15 @@ class MainActivity : ComponentActivity() {
         videoHeight.value = 9
         player = H264StreamPlayer(host, port, pin, surface, object : H264StreamPlayer.Callback {
             override fun onConnected() {
+                val currentQuality = prefManager.getStreamQuality()
+                val bitrate = when (currentQuality) {
+                    "Low" -> 1_000_000 // 1 Mbps
+                    "Medium" -> 2_500_000 // 2.5 Mbps
+                    "High" -> 5_000_000 // 5 Mbps
+                    else -> 2_000_000 // Auto / Default: 2 Mbps
+                }
+                player?.sendQualityChange(bitrate)
+
                 runOnUiThread {
                     isConnecting.value = false
                     isConnected.value = true
@@ -1084,9 +1093,11 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun ActiveDisplayScreen(ip: String, port: Int, pin: String, prefManager: PreferenceManager) {
+        val context = LocalContext.current
         var showOverlay by remember { mutableStateOf(true) }
         var orientationMode by remember { mutableStateOf("Auto") }
         var muteEnabled by remember { mutableStateOf(false) }
+        var streamQuality by remember { mutableStateOf(prefManager.getStreamQuality()) }
 
         val connecting by isConnecting
         val connected by isConnected
@@ -1117,6 +1128,12 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                ) {
+                    showOverlay = !showOverlay
+                }
         ) {
             val w by videoWidth
             val h by videoHeight
@@ -1125,7 +1142,7 @@ class MainActivity : ComponentActivity() {
             AndroidView(
                 factory = { context ->
                     val gd = android.view.GestureDetector(context, object : android.view.GestureDetector.SimpleOnGestureListener() {
-                        override fun onDoubleTap(e: android.view.MotionEvent): Boolean {
+                        override fun onSingleTapConfirmed(e: android.view.MotionEvent): Boolean {
                             showOverlay = !showOverlay
                             return true
                         }
@@ -1226,7 +1243,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            // Dynamic Overlay Panel overlay card
             AnimatedVisibility(
                 visible = showOverlay,
                 enter = fadeIn(),
@@ -1248,7 +1264,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Column {
                                 Text("Streaming mirror active", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Double tap to toggle controls card", color = Color.Gray, fontSize = 11.sp)
+                                Text("Tap screen to toggle controls", color = Color.Gray, fontSize = 11.sp)
                             }
 
                             Button(
@@ -1281,17 +1297,60 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            // Quality shortcut toggle
-                            TextButton(onClick = {
-                                val currentQuality = prefManager.getStreamQuality()
-                                val next = when (currentQuality) {
-                                    "Low" -> "Medium"
-                                    "Medium" -> "High"
-                                    else -> "Low"
+                            // Quality shortcut dropdown menu
+                            var showQualityMenu by remember { mutableStateOf(false) }
+                            Box {
+                                TextButton(
+                                    onClick = { showQualityMenu = true },
+                                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.HighQuality,
+                                        contentDescription = "Quality",
+                                        tint = Color(0xFF00ADB5),
+                                        modifier = Modifier.padding(end = 4.dp)
+                                    )
+                                    Text("Quality: $streamQuality", color = Color.White, fontSize = 14.sp)
+                                    Icon(
+                                        imageVector = Icons.Default.ArrowDropDown,
+                                        contentDescription = null,
+                                        tint = Color.White.copy(alpha = 0.6f)
+                                    )
                                 }
-                                prefManager.setStreamQuality(next)
-                            }) {
-                                Text("Quality: ${prefManager.getStreamQuality()}", color = Color.White)
+
+                                DropdownMenu(
+                                    expanded = showQualityMenu,
+                                    onDismissRequest = { showQualityMenu = false },
+                                    modifier = Modifier.background(Color(0xFF1E293B))
+                                ) {
+                                    listOf("Auto", "Low", "Medium", "High").forEach { q ->
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(
+                                                    text = q,
+                                                    color = if (streamQuality == q) Color(0xFF00ADB5) else Color.White,
+                                                    fontWeight = if (streamQuality == q) FontWeight.Bold else FontWeight.Normal
+                                                )
+                                            },
+                                            onClick = {
+                                                streamQuality = q
+                                                prefManager.setStreamQuality(q)
+                                                showQualityMenu = false
+                                                Toast.makeText(context, "Quality changed to $q", Toast.LENGTH_SHORT).show()
+
+                                                val bitrate = when (q) {
+                                                    "Low" -> 1_000_000
+                                                    "Medium" -> 2_500_000
+                                                    "High" -> 5_000_000
+                                                    else -> 2_000_000
+                                                }
+                                                Thread {
+                                                    player?.sendQualityChange(bitrate)
+                                                }.start()
+                                            }
+                                        )
+                                    }
+                                }
                             }
 
                             // Orientation locking toggle

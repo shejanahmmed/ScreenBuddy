@@ -42,6 +42,7 @@ class H264StreamPlayer(
         private const val MSG_VIDEO_FRAME = 1
         private const val MSG_INPUT_EVENT = 2
         private const val MSG_HANDSHAKE   = 3
+        private const val MSG_QUALITY_CHANGE = 4
         private const val MSG_DISCONNECT  = 5
         private const val DEQUEUE_TIMEOUT_US = 5000L // 5ms
     }
@@ -99,6 +100,17 @@ class H264StreamPlayer(
             putFloat(normalizedY)
         }.array()
         sendPacket(MSG_INPUT_EVENT, payload)
+    }
+
+    /**
+     * Sends a request to change the target streaming bitrate (quality) on the PC.
+     * Format: [4 bytes integer bitrate in bps]
+     */
+    fun sendQualityChange(bitrateBps: Int) {
+        val payload = ByteBuffer.allocate(4).apply {
+            putInt(bitrateBps)
+        }.array()
+        sendPacket(MSG_QUALITY_CHANGE, payload)
     }
 
     @Synchronized
