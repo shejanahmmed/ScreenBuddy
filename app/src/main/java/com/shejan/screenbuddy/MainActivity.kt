@@ -13,6 +13,7 @@ import android.view.SurfaceView
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -1449,6 +1450,10 @@ class MainActivity : ComponentActivity() {
                 .fillMaxSize()
                 .background(Color(0xFF0F172A))
         ) {
+            BackHandler {
+                currentScreen.value = Screen.Home
+            }
+            
             Column(
                 modifier = Modifier
                     .fillMaxSize()
