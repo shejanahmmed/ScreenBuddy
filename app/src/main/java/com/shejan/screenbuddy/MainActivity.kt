@@ -731,7 +731,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        modifier = Modifier.padding(24.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         // QR Scan Trigger
@@ -790,9 +792,14 @@ class MainActivity : ComponentActivity() {
                             placeholder = {
                                 Text(
                                     text = "6-Digit PIN",
-                                    color = Color.Gray,
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center
+                                    textAlign = TextAlign.Center,
+                                    style = LocalTextStyle.current.copy(
+                                        color = Color.Gray,
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp
+                                    )
                                 )
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -825,7 +832,8 @@ class MainActivity : ComponentActivity() {
                         text = "Discovered PCs on network",
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
@@ -1524,14 +1532,19 @@ class MainActivity : ComponentActivity() {
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("Keep screen awake while connected", color = Color.White, fontSize = 14.sp)
-                                Switch(
+                                Text(
+                                    text = "Keep screen awake while connected",
+                                    color = Color.White,
+                                    fontSize = 14.sp,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                                PremiumSwitch(
                                     checked = keepAwake,
                                     onCheckedChange = {
                                         keepAwake = it
                                         prefManager.setKeepAwake(it)
-                                    },
-                                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFF00ADB5))
+                                    }
                                 )
                             }
                         }
@@ -1546,14 +1559,19 @@ class MainActivity : ComponentActivity() {
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Text("Auto-reconnect to last PC on launch", color = Color.White, fontSize = 14.sp)
-                                    Switch(
+                                    Text(
+                                        text = "Auto-reconnect to last PC on launch",
+                                        color = Color.White,
+                                        fontSize = 14.sp,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                    PremiumSwitch(
                                         checked = autoReconnect,
                                         onCheckedChange = {
                                             autoReconnect = it
                                             prefManager.setAutoReconnect(it)
-                                        },
-                                        colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFF00ADB5))
+                                        }
                                     )
                                 }
 
@@ -1698,4 +1716,56 @@ fun AdMobBanner(modifier: Modifier = Modifier, preferenceManager: PreferenceMana
             }
         }
     )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PREMIUM CUSTOM SWITCH
+// ─────────────────────────────────────────────────────────────────────────────
+
+@Composable
+fun PremiumSwitch(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val trackWidth = 46.dp
+    val trackHeight = 26.dp
+    val thumbSize = 20.dp
+    val padding = 3.dp
+
+    // Animate the thumb offset
+    val thumbOffset by animateDpAsState(
+        targetValue = if (checked) trackWidth - thumbSize - padding else padding,
+        animationSpec = spring(stiffness = Spring.StiffnessMedium),
+        label = "ThumbOffset"
+    )
+
+    // Animate colors
+    val trackColor by animateColorAsState(
+        targetValue = if (checked) Color(0xFF00ADB5) else Color.White.copy(alpha = 0.15f),
+        animationSpec = tween(200),
+        label = "TrackColor"
+    )
+    val thumbColor by animateColorAsState(
+        targetValue = if (checked) Color.White else Color.Gray,
+        animationSpec = tween(200),
+        label = "ThumbColor"
+    )
+
+    Box(
+        modifier = modifier
+            .size(width = trackWidth, height = trackHeight)
+            .clip(RoundedCornerShape(100))
+            .background(trackColor)
+            .clickable { onCheckedChange(!checked) },
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Box(
+            modifier = Modifier
+                .offset(x = thumbOffset)
+                .size(thumbSize)
+                .clip(CircleShape)
+                .background(thumbColor)
+        )
+    }
 }
