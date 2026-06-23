@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "XwOqAPq2zi0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyTray\\ScreenBuddyTray.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\sharpgen.runtime\\2.4.2-beta\\sharpgen.runtime.2.4.2-beta.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\sharpgen.runtime.com\\2.4.2-beta\\sharpgen.runtime.com.2.4.2-beta.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.drawing.common\\8.0.0\\system.drawing.common.8.0.0.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.io.pipelines\\9.0.1\\system.io.pipelines.9.0.1.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.text.encodings.web\\9.0.1\\system.text.encodings.web.9.0.1.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\system.text.json\\9.0.1\\system.text.json.9.0.1.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\vortice.direct3d11\\3.6.2\\vortice.direct3d11.3.6.2.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\vortice.directx\\3.8.3\\vortice.directx.3.8.3.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\vortice.dxgi\\3.6.2\\vortice.dxgi.3.6.2.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\vortice.mathematics\\2.1.0\\vortice.mathematics.2.1.0.nupkg.sha512",
+    "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\vortice.mediafoundation\\3.8.3\\vortice.mediafoundation.3.8.3.nupkg.sha512"
+  ],
+  "logs": []
+}

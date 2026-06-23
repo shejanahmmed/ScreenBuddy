@@ -18,6 +18,7 @@ namespace ScreenBuddyCapture;
 public sealed class StreamServer : IDisposable
 {
     private readonly int _port;
+    private readonly int _displayIndex;
     private TcpListener? _listener;
     private UdpClient? _udpListener;
     private CancellationTokenSource? _cts;
@@ -34,9 +35,10 @@ public sealed class StreamServer : IDisposable
 
     public string Pin { get; private set; }
 
-    public StreamServer(int port = 7890)
+    public StreamServer(int port = 7890, int displayIndex = 0)
     {
         _port = port;
+        _displayIndex = displayIndex;
         // Generate a random 6-digit pairing PIN on instantiation
         var rand = new Random();
         Pin = rand.Next(100000, 999999).ToString();
@@ -238,7 +240,7 @@ public sealed class StreamServer : IDisposable
                 //    D3D device and Media Foundation Encoder allocated ONLY
                 //    after successful client authentication.
                 // ─────────────────────────────────────────────────────────────
-                capture = new ScreenCapture(displayIndex: 0);
+                capture = new ScreenCapture(displayIndex: _displayIndex);
                 
                 var sessionState = new SessionState();
 

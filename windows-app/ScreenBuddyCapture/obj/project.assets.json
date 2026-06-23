@@ -847,11 +847,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+      "projectUniqueName": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
       "projectName": "ScreenBuddyCapture",
-      "projectPath": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+      "projectPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
       "packagesPath": "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\obj\\",
+      "outputPath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ShejanAhmmed\\AppData\\Roaming\\NuGet\\NuGet.Config"

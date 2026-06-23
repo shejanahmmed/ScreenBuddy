@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Vortice: modern C# wrappers for DXGI + Direct3D11 + Media Foundation -->
+    <PackageReference Include="Vortice.Direct3D11" Version="3.6.2" />
+    <PackageReference Include="Vortice.DXGI" Version="3.6.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="Vortice.MediaFoundation" Version="3.8.3" />
+    <!-- WMI for driver detection -->
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Link shared source files from the console project — no code duplication -->
+    <Compile Include="..\ScreenBuddyCapture\StreamServer.cs"    Link="Core\StreamServer.cs" />
+    <Compile Include="..\ScreenBuddyCapture\H264Encoder.cs"     Link="Core\H264Encoder.cs" />
+    <Compile Include="..\ScreenBuddyCapture\ScreenCapture.cs"   Link="Core\ScreenCapture.cs" />
+    <Compile Include="..\ScreenBuddyCapture\InputSimulator.cs"  Link="Core\InputSimulator.cs" />
+    <Compile Include="..\ScreenBuddyCapture\StreamClient.cs"    Link="Core\StreamClient.cs" />
+  </ItemGroup>
+
+</Project>

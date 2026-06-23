@@ -81,7 +81,7 @@ public sealed class H264Encoder : IDisposable
         // Print the encoder name for diagnostics
         try
         {
-            string name = activate.GetAllocatedString(MFT_FRIENDLY_NAME);
+            string? name = activate.GetAllocatedString(MFT_FRIENDLY_NAME);
             Console.WriteLine($"[H264Encoder] Using encoder: {name}");
         }
         catch

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "isQONzrYT9E=",
+  "dgSpecHash": "6mei5QPnub0=",
   "success": true,
-  "projectFilePath": "c:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
+  "projectFilePath": "C:\\Users\\ShejanAhmmed\\Documents\\All My Projects\\Apps\\ScreenBuddy\\windows-app\\ScreenBuddyCapture\\ScreenBuddyCapture.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
     "C:\\Users\\ShejanAhmmed\\.nuget\\packages\\sharpgen.runtime\\2.4.2-beta\\sharpgen.runtime.2.4.2-beta.nupkg.sha512",

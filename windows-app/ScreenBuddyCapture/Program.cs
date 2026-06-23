@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using ScreenBuddyCapture;
+using Vortice.DXGI;
 
 // Ensure console can display UTF8 characters properly
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -204,7 +205,27 @@ static void RunStreamServer()
     Console.WriteLine(" TCP Socket Stream Server (Step 3)");
     Console.WriteLine("=================================================");
 
-    using var server = new StreamServer(port: 7890);
+    var displays = GetDisplayNames();
+    int selectedDisplay = 0;
+
+    if (displays.Count > 1)
+    {
+        Console.WriteLine("\nMultiple displays detected:");
+        for (int i = 0; i < displays.Count; i++)
+        {
+            Console.WriteLine($"  [{i}] {displays[i]}");
+        }
+        Console.WriteLine();
+        Console.Write($"Select display to stream (0-{displays.Count - 1}, default 0): ");
+        var input = Console.ReadLine();
+        if (int.TryParse(input, out int choice) && choice >= 0 && choice < displays.Count)
+        {
+            selectedDisplay = choice;
+        }
+        Console.WriteLine($"Selected: {displays[selectedDisplay]}\n");
+    }
+
+    using var server = new StreamServer(port: 7890, displayIndex: selectedDisplay);
     try
     {
         server.Start();
@@ -233,6 +254,40 @@ static void RunStreamServer()
 
     Console.WriteLine("\nPress any key to return to menu...");
     Console.ReadKey();
+}
+
+static List<string> GetDisplayNames()
+{
+    var list = new List<string>();
+    try
+    {
+        DXGI.CreateDXGIFactory1<IDXGIFactory1>(out var factory).CheckError();
+        factory!.EnumAdapters(0, out var adapter).CheckError();
+        
+        uint outputIndex = 0;
+        while (true)
+        {
+            var result = adapter!.EnumOutputs(outputIndex, out var output);
+            if (result.Failure) break;
+            
+            var desc = output!.Description;
+            int width = desc.DesktopCoordinates.Right - desc.DesktopCoordinates.Left;
+            int height = desc.DesktopCoordinates.Bottom - desc.DesktopCoordinates.Top;
+            list.Add($"Display {outputIndex}: {width}x{height}");
+            
+            output.Dispose();
+            outputIndex++;
+        }
+        
+        adapter.Dispose();
+        factory.Dispose();
+    }
+    catch
+    {
+        list.Clear();
+        list.Add("Display 0 (Default)");
+    }
+    return list;
 }
 
 static void RunStreamClient()
